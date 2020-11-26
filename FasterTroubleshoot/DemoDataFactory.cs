@@ -5,7 +5,7 @@ namespace FasterTroubleshoot
 {
 	public class DemoDataFactory
 	{
-		public static int _itemCount = 5000;	
+		public static int _itemCount = 500000;	
 
 		public static IEnumerable<KeyValuePair<CacheKey, CacheValue>> LeftList => Enumerable.Range(1, _itemCount)
 			.Select(i => new KeyValuePair<CacheKey, CacheValue>(

@@ -46,7 +46,11 @@ namespace FasterTroubleshoot
 			var bytes = new byte[sizet];
 			reader.Read(bytes, 0, sizet);
 
-			if (sizet <= 0) EmptyReads++;
+			if (sizet <= 0)
+			{
+				EmptyReads++;
+				Console.WriteLine("Empty stream found");
+			}
 
 			obj.Value = System.Text.Encoding.UTF8.GetString(bytes);
 		}

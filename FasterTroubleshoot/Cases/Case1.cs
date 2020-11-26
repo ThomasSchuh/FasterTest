@@ -18,7 +18,7 @@ namespace FasterTroubleshoot
 
 		public void Execute()
 		{
-			var session = _fasterStore.NewSession(new SimpleFunctions<CacheKey, CacheValue, StoreContext>());
+			var session = _fasterStore.NewSession(new StoreFunctions());
 
 			var left = DemoDataFactory.LeftList;
 			foreach (var item in left)
@@ -44,11 +44,8 @@ namespace FasterTroubleshoot
 				switch (status)
 				{
 					case Status.OK:
-						matches++;
 						break;
 					case Status.PENDING:
-						Console.WriteLine($"status {status} for {item.Key}");
-						//session.CompletePendingAsync(true).GetAwaiter().GetResult();
 						session.CompletePending(true);
 						context.FinalizeRead(ref status, ref value);
 						break;
@@ -57,29 +54,11 @@ namespace FasterTroubleshoot
 				}
 			}
 
-			Console.WriteLine("matches: " + matches + " of " + DemoDataFactory._itemCount);
 			Console.WriteLine("KeySerializer.EmptyReads: " + KeySerializer.EmptyReads);
 			Console.WriteLine("ValueSerializer.EmptyReads: " + ValueSerializer.EmptyReads);
-
 		}
 
-		public class StoreContext
-		{
-			private Status status;
-			private CacheValue output;
-
-			internal void Populate(ref Status status, ref CacheValue output)
-			{
-				this.status = status;
-				this.output = output;
-			}
-
-			internal void FinalizeRead(ref Status status, ref CacheValue output)
-			{
-				status = this.status;
-				output = this.output;
-			}
-		}
+		
 
 	}
 }

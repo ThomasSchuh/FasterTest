@@ -28,8 +28,8 @@ namespace FasterTroubleshoot
 			{
 				LogDevice = LogDevice,
 				ObjectLogDevice = ObjectLogDevice,
-				PageSizeBits = 12,
-				MemorySizeBits = 16,
+				PageSizeBits = 8,
+				MemorySizeBits = 9,
 			};
 			return logSettings;
 		}
@@ -38,15 +38,15 @@ namespace FasterTroubleshoot
 		{
 			return Devices.CreateLogDevice(
 				Path.Combine(@".\Cache", $"{_deviceLogName}.log"),
-				preallocateFile: false,
-				deleteOnClose: false);
+				preallocateFile: true,
+				deleteOnClose: true);
 		}
 		private static IDevice BuildObjectLogDevice()
 		{
 			return Devices.CreateLogDevice(
 				Path.Combine(@".\Cache", $"{ _deviceLogName}.obj.log"),
-				preallocateFile: false,
-				deleteOnClose: false);
+				preallocateFile: true,
+				deleteOnClose: true);
 		}
 	}
 }
